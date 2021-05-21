@@ -1,0 +1,166 @@
+{% extends 'BusTracking/basics.html' %}
+
+{% block title %}Contact Us-Mall.in{% endblock %}   
+
+{% block css %}
+<style>
+
+    .container{
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        top:100px;
+    }
+    .center{
+        text-align: center;
+    }
+    .mb-3{
+      display: inline-block;
+    }
+</style>
+{% endblock %}   
+{% block body %}
+<div class="container">
+  {% if R %}
+    <form action="/bookmultipleticket/{{pass_id}}/{{number}}/" method="POST" id="loginuser">{% csrf_token %}
+    <!-- <h3 class="center">Query-Section</h3>
+    <div class="mb-3 col-4">
+        <label for="name" class="form-label">Name</label>
+        <input type="name" class="form-control" id="name" name="name" placeholder="Enter your Name" required>
+      </div>
+    <div class="mb-3 col-4">
+        <label for="age" class="form-label">Age</label>
+        <input type="number" class="form-control" id="age" name="age" placeholder="Enter your Age">
+      </div>
+    <div class="mb-3 col-3">
+        <label for="id" class="form-label">AdhaarId</label>
+        <input type="number" class="form-control" id="id" name="id" placeholder="Enter your Adhaar-Number" required>
+      </div>
+      <div class="mb-3 col-12">
+        <div class="bootstrap-iso">
+            <div class="form-group"> 
+              <label class="control-label" for="date">Date</label>
+              <input class="form-control" id="date" name="date" placeholder="YYYY-MM-DD" type="text"/>
+            </div>
+          </div>
+      </div>
+      <button type="submit" class="btn btn-success ">Submit</button> -->
+    </form>
+    {% else %}
+    <form action="/bookticket/{{route_id}}/{{pass_id}}/{{number}}/" method="POST" id="loginuser">{% csrf_token %}
+      <!-- <h3 class="center">Query-Section</h3>
+      <div class="mb-3 col-4">
+          <label for="name" class="form-label">Name</label>
+          <input type="name" class="form-control" id="name" name="name" placeholder="Enter your Name" required>
+        </div>
+      <div class="mb-3 col-4">
+          <label for="age" class="form-label">Age</label>
+          <input type="number" class="form-control" id="age" name="age" placeholder="Enter your Age">
+        </div>
+      <div class="mb-3 col-3">
+          <label for="id" class="form-label">AdhaarId</label>
+          <input type="number" class="form-control" id="id" name="id" placeholder="Enter your Adhaar-Number" required>
+        </div>
+        <div class="mb-3 col-12">
+          <div class="bootstrap-iso">
+              <div class="form-group"> 
+                <label class="control-label" for="date">Date</label>
+                <input class="form-control" id="date" name="date" placeholder="YYYY-MM-DD" type="text"/>
+              </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success ">Submit</button> -->
+      </form>
+    {% endif %}
+    <div id="extra">
+    
+    </div>
+</div>
+{% endblock %}   
+
+
+  {% block js %}
+<script>
+  {% for i in range %}
+    $(document).ready(function(){
+      var date_input=$('input[name="date{{forloop.counter}}"]'); //our date input has the name "date"
+      var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+      var options={
+        format: 'yyyy-mm-dd',
+        container: container,
+        todayHighlight: true,
+        autoclose: true,
+      };
+      date_input.datepicker(options);
+    })
+    {% endfor %}
+  {% for i in range %}
+    $(document).ready(function(){
+      var date_input=$('input[name="bdate{{forloop.counter}}"]'); //our date input has the name "date"
+      var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+      var options={
+        format: 'yyyy-mm-dd',
+        container: container,
+        todayHighlight: true,
+        autoclose: true,
+      };
+      date_input.datepicker(options);
+    })
+    {% endfor %}
+
+    {% if user.is_authenticated %}
+    name = localStorage.getItem('infoName')
+    document.getElementById('loginuser').innerHTML=`{% csrf_token %}
+     <h3 class="center my-5">Hello ${name},Please fill this information so that we can know that for which person ticket is booking</h3>
+    {% for i in range %}
+    <h3 class="center">For person{{forloop.counter}}</h3>
+      <div class="mb-3 col-12">
+        
+
+              <div class="mb-3 col-3">
+                  <label for="name{{forloop.counter}}" class="form-label">Name</label>
+                  <input type="name" class="form-control" id="name{{forloop.counter}}" aria-describedby="emailHelp" name="name{{forloop.counter}}" required>
+                </div>
+                <div class="mb-3 col-3">
+                  <label for="id{{forloop.counter}}" class="form-label">Adhaar ID</label>
+                  <input type="number" class="form-control" id="id{{forloop.counter}}" aria-describedby="emailHelp" name="id{{forloop.counter}}" required>
+                </div>
+                <div class="mb-3 col-4">
+                  <div class="bootstrap-iso">
+                      <div class="form-group"> <!-- Date input -->
+                        <label class="control-label" for="date">Birth-Date</label>
+                        <input class="form-control" id="bdate{{forloop.counter}}" name="bdate{{forloop.counter}}" placeholder="YYYY-MM-DD" type="text" required>
+                      </div>
+                    </div>
+                </div>
+                <div class="bootstrap-iso">
+            <div class="form-group"> <!-- Date input -->
+              <div class="mb-3 col-3">
+              <label class="control-label" for="date">Date</label>
+              <input class="form-control" id="date{{forloop.counter}}" name="date{{forloop.counter}}" placeholder="YYYY-MM-DD" type="text"/>
+            </div>
+            </div>
+          </div>
+      </div>
+      {% endfor %}
+              <input style="display: none;" class="center title" id="routeid" name="routeid" value="{{arrayrouteid}}">
+              <input style="display: none;" class="center title" id="cost" name="cost" value="{{cost}}">
+              <input style="display: none;" class="center title" id="rdid" name="rdid" value="{{rdid}}">
+              <input style="display: none;" class="center title" id="roid" name="roid" value="{{roid}}">
+      <button type="submit" class="btn btn-success ">Submit</button>`
+//     {% else %}
+// document.getElementById('loginuser').innerHTML=`{% csrf_token %} <h3 class="center">Passenger-Info</h3>
+    
+//       <div class="mb-3 col-12">
+//         <div class="bootstrap-iso">
+//             <div class="form-group"> <!-- Date input -->
+//               <label class="control-label" for="date">Date</label>
+//               <input class="form-control" id="date" name="date" placeholder="YYYY-MM-DD" type="text"/>
+//             </div>
+//           </div>
+//       </div>
+//       <button type="submit" class="btn btn-success ">Submit</button>`
+
+      {% endif %}
+</script>
+  {% endblock %}

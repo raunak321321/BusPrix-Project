@@ -1,0 +1,266 @@
+{% extends 'BusTracking/basics.html' %}
+{% load static %}     
+
+
+{% block title %}BlueBus.in{% endblock %}
+
+{% block css %}
+<style>
+
+    .container{
+        position: absolute;
+        margin: 0%;
+        padding: 0%;
+    display: flex;
+    flex-direction: column;
+height: 600px;
+max-width: 100%;
+justify-content: center;
+align-items: center;    
+z-index: -1;
+}
+
+.container::before{
+    /* background: url({% static 'BusTracking/media/image3.jpg' %})no-repeat; */
+background: url('https://st.redbus.in/Images/INDOFFER/COVID-19/heroimage2.png') no-repeat center/cover;
+box-sizing: content-box;
+content: "";
+position: absolute  ;
+width: 100%;
+height: 100%;
+z-index: -1;
+opacity: 1;
+
+/* background: url('static/BusTracking/media/image4.jpg')no-repeat right; */
+
+}
+.color{
+    background-color: aqua;
+}
+.bck{
+    background-color: rgb(98, 0, 255);
+}
+.style{
+    opacity: 0.75;
+}
+.ticket{
+    top: 600px;
+    position: relative;
+ 
+}
+.card {
+    display: inline-block;
+    z-index: 0;
+    margin: 5px;
+    padding: 5px;
+    justify-content: center;
+    align-items: center;
+    max-width: max-content;
+    height: fit-content;
+
+  }
+
+  
+  .para {
+    z-index: 0;
+    margin: 10px;
+    padding: 16px;
+    text-align: center;
+  }
+
+  h4 {
+    z-index: 0;
+    text-align: center;
+    margin: 2px;
+    padding: 2px;
+  }
+
+  body .carousel-control-prev-icon,
+  body .carousel-control-next-icon {
+    z-index: 0;
+    background-color: blue;
+    width: 14px;
+    height: 18px;
+  }
+
+  .carousel-control-prev,
+  .carousel-control-next {
+    z-index: 0;
+    top: auto;
+    bottom: auto;
+  }
+
+  .carousel-indicators [data-bs-target] {
+    z-index: 0;
+    background-color: green;
+  }
+
+  .my_container {
+    display: flex;
+    z-index: 0;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .container2 {
+    top: 35px;
+    position: relative;
+  }
+
+  .button_cart {
+    display: inline-block;
+
+  }
+
+  .invisible {
+    display: none;
+  }
+  .center{
+    text-align: center;
+    align-content: center;
+    align-items: center;
+  }
+  input{
+    display: block;
+  }
+
+</style>
+
+
+{% endblock %}
+
+{% block body %}
+<section class="container">
+    <!-- <h2 class="style" style="background-color:rgb(214, 207, 205)">
+        There is a list which have all the city where our bus stops
+    </h2>
+    <div class="col-2 mx-2 my-4 style">
+        <select class="form-select" aria-label="Select origin" aria-placeholder="To">
+            {% for item in busstand %}
+            <option value={{forloop.counter|add:1}}>
+  
+              {{item.name| upper}}
+            </option>
+              {% endfor %}
+        </select>
+    </div> -->
+    <div id="extraerror" class="style">
+
+    </div>
+    <form class="my-10 mx-10 style" action="/searchbus/" method="POST">{% csrf_token %}
+
+        <div class="input-group mb-3 my-10 ">
+            <input type="city" class="form-control color my-10" placeholder="To" aria-label="Username" name="cityT">
+            <span class="input-group-text">@</span>
+            <input type="city" class="form-control color" placeholder="From" aria-label="Server" name="cityF">
+            <button style="background-color: rgb(211, 81, 71);" type="submit" class="btn btn-primary">Search Buses</button>
+        </div>
+    </form>
+    <div id="extra">
+
+    </div>
+</section>
+<div class="ticket">
+
+    <div id="extra1">
+        
+    </div>
+ </div> 
+
+{% endblock %}
+
+{% block js %}
+<script>
+ pass_id =  localStorage.getItem('infoPass_id')
+    {% if passenger_save %}
+alert("Thanks for booking ticket.Your ticket id is {{ticket_id}} and passenger id is {{pass_id}}.Please store these values.And for tickets just click on the 'SeeYourTickets' link which is seen just above when you click on ok button.Thanks")
+document.getElementById('extra').innerHTML = ` <div class="card" style="width: 18rem;">
+      <h6 class="card-title">Ticket ID: {{ticket_id}}</h6>
+      <h6 class="card-title">Passsenger ID: {{pass_id}}</h6>
+      <h6 class="card-title">For ticket just click on link 'SeeYourTickets' and put ticket id and pass id there which is shown here.</h6>
+        </div>`
+    {% endif %}
+    {% if error1 %}
+document.getElementById('extraerror').innerHTML=`<h6 style="color:red">At present time there are no bus for this origin and destination</h6>`
+    {% endif %}
+    {% if error2 %}
+document.getElementById('extraerror').innerHTML=`<h6 style="color:red">Please check your spelling once again </h6>`
+    {% endif %}
+    {% if thank %}
+    document.getElementById('extra').innerHTML = `<img src="/media/Bustracking/images/scroll.png" class="d-block" alt="">`
+    
+    document.getElementById('extra1').innerHTML = `<div class="container2">
+
+<div class="center">
+
+  <h5 class="my-4">BUS</h5>
+</div>
+<div class="my_container">
+  <div id="carouselExampleCaptions{{forloop.counter}}" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExampleCaptions{{forloop.counter}}" data-bs-slide-to="0"
+        class="active" aria-current="true" aria-label="Slide 1"></button>
+        {% for i in range %}
+      <button type="button" data-bs-target="#carouselExampleCaptions{{forloop.parentloop.counter}}"
+        data-bs-slide-to="{{i}}" aria-label='Slide {{i|add:1}}'></button>
+      {% endfor %}
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <div class="image-container">
+          {% for product in allbusobj %}
+          <div class="card center">
+          <form action="/directbooktickets/${pass_id}/" method="POST">{% csrf_token %}
+            <img src="/media/{{product.0.0.image}}" class="d-block center" alt="">
+            <input class="center title" id="busname{{product.0.0.bus_id}}" name="name" value="{{product.0.0.name}}">
+            <input class="center title" id="noOfSeats{{product.0.0.bus_id}}" name="seats" value="Seats- {{product.0.0.noOfSeats}}">
+            <input style="display: none;" class="center title" id="ID{{product.0.0.bus_id}}" name="id" value="ID- {{product.0.0.bus_id}}">
+            <input class="center title" id="Type{{product.0.0.bus_id}}" name="type" value="Type- {{product.0.0.Type}}">
+            <input style="display: none;" class="center title" id="nameC{{product.0.0.bus_id}}" name="conduc" value="Bus Conductor- {{product.0.0.busConductor}}">
+            <input class="center title" id="To{{product.0.0.bus_id}}" name="to" value="To- {{destination}}">
+            <input class="center title" id="From{{product.0.0.bus_id}}" name="from" value="From- {{origin}}">
+            <input class="center title" id="From{{product.0.0.bus_id}}" name="arrival" value="Arrival at(tentative)- {{product.2}}">
+            <input class="center title" id="From{{product.0.0.bus_id}}" name="arrival" value="Arrival at destination(tentative)- {{product.3}}">
+            <input style="display: none;" class="center title" id="phone{{product.0.0.bus_id}}" name="cc" value="Contact Conductor- {{product.0.0.conductorPhone}}">
+            <input class="center title" id="cost{{product.0.0.bus_id}}" name="cost" value="Cost- {{product.1}}">
+            <input class="center title" id="ond{{product.0.0.bus_id}}" name="ond" value="for {{origin}} to {{destination}}">
+            <input style="display: none;" class="center title" id="r{{product.0.0.bus_id}}" name="r" value="{{r}}">
+            <input style="display: none;" class="center title" id="rid{{product.0.0.bus_id}}" name="rid" value="{% for item in product.4 %}{{item}} {% endfor %}">
+            <input style="display: none;" class="center title" id="roid{{product.0.0.bus_id}}" name="roid" value="{{product.5}}">
+            <input style="display: none;" class="center title" id="rdid{{product.0.0.bus_id}}" name="rdid" value="{{product.6}}">
+            <label for="number" class="form-label">No of Tickets</label>
+                  <input type="number" class="form-control" id="number" aria-describedby="emailHelp" name="number" required>
+            <div class="cart_button">
+                <button id="button{{product.0.0.bus_id}}" class="btn btn-sm btn-primary" type="submit">Book Tickets</button>
+              </div>
+              </form>
+          </div>
+          {% if forloop.counter|divisibleby:2 and forloop.counter > 0 and not forloop.last %}
+        </div>
+      </div>
+      <div class="carousel-item">
+        <div class="image-container">
+          {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="carousel-control-prev " type="button" data-bs-target="#carouselExampleCaptions{{forloop.counter}}"
+    data-bs-slide="prev">
+    <span class="carousel-control-prev-icon " aria-hidden="true"></span>
+    <span class="visually-hidden ">Previous</span>
+  </button>
+  <button class="carousel-control-next " type="button" data-bs-target="#carouselExampleCaptions{{forloop.counter}}"
+    data-bs-slide="next">
+    <span class="carousel-control-next-icon " aria-hidden="true"></span>
+    <span class="visually-hidden ">Next</span>
+  </button>
+
+</div>
+</div>
+</div>`
+    {% endif %}
+</script>
+{% endblock %}

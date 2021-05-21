@@ -1,0 +1,221 @@
+{% extends 'BusTracking/basics.html' %}
+
+{% load static %}  
+
+{% block title %}BlueBus-TicketChecker.in{% endblock %}
+{% block css %}
+<style>
+    .container{
+      position: absolute;
+      margin: 0%;
+        padding: 0%;
+    display: flex;
+    flex-direction: column;
+height: 600px;
+max-width: 100%;
+justify-content: center;
+align-items: center;
+z-index: -1;
+}
+
+    .container::before{
+background: url('https://st.redbus.in/Images/INDOFFER/COVID-19/heroimage2.png') no-repeat center/cover;
+box-sizing: border-box;
+content: "";
+position: absolute;
+width: 100%;
+height: 100%;
+z-index: -1;
+opacity: 1;
+
+}
+
+
+.color{
+    background-color: aqua;
+}
+.bck{
+    background-color: rgb(98, 0, 255);
+}
+.style{
+    opacity: 0.75;
+}
+.ticket{
+    top: 600px;
+    position: relative;
+ 
+}
+.card {
+    display: inline-block;
+    z-index: 0;
+    margin: 5px;
+    padding: 2px;
+    justify-content: center;
+    align-items: center;
+    max-width: 300;
+    height: 350px;
+
+  }
+
+  
+  .para {
+    z-index: 0;
+    margin: 10px;
+    padding: 16px;
+    text-align: center;
+  }
+
+  h4 {
+    z-index: 0;
+    text-align: center;
+    margin: 2px;
+    padding: 2px;
+  }
+
+  body .carousel-control-prev-icon,
+  body .carousel-control-next-icon {
+    z-index: 0;
+    background-color: blue;
+    width: 14px;
+    height: 18px;
+  }
+
+  .carousel-control-prev,
+  .carousel-control-next {
+    z-index: 0;
+    top: auto;
+    bottom: auto;
+  }
+
+  .carousel-indicators [data-bs-target] {
+    z-index: 0;
+    background-color: green;
+  }
+
+  .my_container {
+    display: flex;
+    z-index: 0;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .container2 {
+    top: 35px;
+    position: relative;
+  }
+
+  .button_cart {
+    display: inline-block;
+
+  }
+
+  .center{
+    text-align: center;
+    align-content: center;
+    align-items: center;
+  }
+#extra1 img{
+  width: 200px;
+  height: 200px;
+}
+table, th, td {
+  border: 1px solid red;
+}
+thead{
+  background-color: rgb(239 117 136);
+}
+</style>
+{% endblock %}
+
+
+{% block body %}
+  
+  <section class="container">
+      <div id="extra">
+
+      </div>
+  
+ <div id="extra1">
+  <img src="/media/Bustracking/images/scroll.png" class="d-block" alt="">
+</div>
+
+  </section>
+<div class="ticket">
+
+  <div id="extra2" class="center">
+    <h4>
+
+      All the tickets which you booked
+    </h4>
+    <br>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Image</th>
+            <th scope="col">Bus-Name</th>
+            <th scope="col">Name</th>
+            <th scope="col">Adhaar ID</th>
+            <th scope="col">To</th>
+            <th scope="col">From</th>
+            <th scope="col">Station Time</th>
+            <th scope="col">Destination Time</th>
+            <th scope="col">Date</th>
+            <th scope="col">Cost</th>
+          </tr>
+        </thead>
+    
+        <tbody id="tableBody">
+          {% for item in output %}
+          <tr>
+            <td scope="row">
+              <img src="/media/{{item.bus.0.image}}" class="d-block" alt="error">
+            </td>
+            <td><h6 class="center title" id="name{{forloop.counter}}">{{item.bus.0.name}}</h6>
+            </td>
+            <td><h6 class="center title" id="name{{forloop.counter}}">{{item.pass_ticket.0.name}}</h6>
+            </td>
+            <td><h6 class="center title" id="id{{forloop.counter}}">{{item.pass_ticket.0.adhaarId}}</h6>
+            </td>
+            <td><h6 class="center title" id="to{{forloop.counter}}">{{item.busstandDestination.0.name}}</h6></td>
+            <td><h6 class="center title" id="from{{forloop.counter}}">{{item.busstandOrigin.0.name}}</h6></td>
+            <td><h6 class="center title" id="sTime{{forloop.counter}}">{{item.routes.0.stationTime}}</h6></td>
+            <td><h6 class="center title" id="dTime{{forloop.counter}}">{{item.routes.0.destinationTime}}</h6></td>
+            <td><h6 class="center title" id="date{{forloop.counter}}">{{item.trip.0.tripDate}}</h6></td>
+            <td><h6 class="center title" id="cost{{forloop.counter}}">{{item.routes.0.cost}}</h6></td>
+          </tr>
+         
+          
+          {% endfor %}
+          {% for item in output1 %}
+          <tr>
+            <td scope="row">
+              <img src="/media/{{item.bus1.0.image}}" class="d-block" alt="error">
+            </td>
+            <td><h6 class="center title" id="name{{forloop.counter}}">{{item.bus1.0.name}}</h6>
+            </td>
+            <td><h6 class="center title" id="name{{forloop.counter}}">{{item.passticket.0.name}}</h6>
+            </td>
+            <td><h6 class="center title" id="id{{forloop.counter}}">{{item.passticket.0.adhaarId}}</h6>
+            </td>
+            <td><h6 class="center title" id="to{{forloop.counter}}">{{item.busstandD.0.name}}</h6></td>
+            <td><h6 class="center title" id="from{{forloop.counter}}">{{item.busstandO.0.name}}</h6></td>
+            <td><h6 class="center title" id="sTime{{forloop.counter}}">{{item.routesO.0.stationTime}}</h6></td>
+            <td><h6 class="center title" id="dTime{{forloop.counter}}">{{item.routesD.0.destinationTime}}</h6></td>
+            <td><h6 class="center title" id="date{{forloop.counter}}">{{item.trip1.0.tripDate}}</h6></td>
+            <td><h6 class="center title" id="cost{{forloop.counter}}">{{item.cost}}</h6></td>
+          </tr>
+         
+          {% endfor %}
+        </tbody>
+      </table>
+  </div>
+</div>
+  {% endblock %}
+
+  {% block js %}
+  <script>
+  
+  
+  </script> 
+
+  {% endblock %}

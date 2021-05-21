@@ -1,0 +1,60 @@
+{% extends 'BusTracking/basics.html' %}
+
+{% block title %}About Us-Mall.in{% endblock %}   
+
+
+{% block css %}
+<style>
+.img{
+width: 70%;
+height: 70%;
+}
+.container{
+    padding: 0%;
+    margin: 0%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.center{
+    padding: 0%;
+    margin: 0%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+</style>
+{% endblock %}
+{% block body %}
+<section class="container">
+    <div class="product_view col-12 center">
+        <div class="image-container clo-4">
+            <img src="/media/{{bus.0.image}}" class="my-4 img">
+        </div>
+
+        <h4 class="my-2" id="id">ID-{{bus.0.bus_id}}</h4>
+        <h4 class="my-2" id="name">Name-{{bus.0.name}}</h4>
+        <h4 class="my-2" id="Type">Type-{{bus.0.Type}}</h4>
+        <h4 class="my-2" id="Seats">No of Seats-{{bus.0.noOfSeats}}</h4>
+    </div>
+    <h4 id="desc">There is a list which have all the city where this bus stops</h4>
+    <div class="col-6 my-4">
+        <select class="form-select" aria-label="Select origin" aria-placeholder="To">
+            {% for item in busstand %}
+            <option value={{forloop.counter|add:1}}>
+  
+            <!-- id="H_name{{forloop.counter|add:1}}" name="H_name{{forloop.counter|add:1}}"> -->
+              {{item.name| upper}}
+            </option>
+            <!-- <option value="2>Two</option>
+              <option value="3">"Three</option> -->
+              {% endfor %}
+        </select>
+    </div>
+</section>
+
+{% endblock %}
+ 
+

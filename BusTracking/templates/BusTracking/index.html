@@ -1,0 +1,335 @@
+{% extends 'BusTracking/basics.html' %}
+{% load static %}     
+
+
+{% block title %}BlueBus.in{% endblock %}
+
+{% block css %}
+<style>
+
+    .container{
+      position: relative;
+        margin: 0%;
+        padding: 0%;
+    display: flex;
+height: 600px;
+max-width: 100%;
+z-index: -1;
+
+/* justify-content: center;
+align-items: center;     */
+}
+#alert{
+  width: 100%;
+  padding: 0%;
+  /* margin: 0%; */
+}
+
+
+.container::before{
+    /* background: url({% static 'BusTracking/media/image3.jpg' %})no-repeat; */
+background: url('/media/BusTracking/images/image7.jpg') no-repeat center/cover;
+content: "";
+position: absolute;
+width: 100%;
+height: 100%;
+z-index: -1;
+opacity: 0.9;
+
+/* background: url('static/BusTracking/media/image4.jpg')no-repeat right; */
+
+}
+#close{
+  margin: 0%;
+  float: right;
+  right: 0%;
+}
+
+.container1{
+    position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        top:50px;
+        margin: 10px;
+        padding: 10px;
+    }
+
+    .display1{
+        display: flex;
+        flex-direction: column;
+    }
+  
+
+  .image-container {
+    z-index: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+
+  .card {
+    z-index: 0;
+    margin: 5px;
+    padding: 2px;
+    justify-content: center;
+    align-items: center;
+    max-width: 300;
+    height: 350px;
+
+  }
+
+  
+  .para {
+    z-index: 0;
+    margin: 10px;
+    padding: 16px;
+    text-align: center;
+  }
+
+  h4 {
+    z-index: 0;
+    text-align: center;
+    margin: 2px;
+    padding: 2px;
+  }
+
+  body .carousel-control-prev-icon,
+  body .carousel-control-next-icon {
+    z-index: 0;
+    background-color: blue;
+    width: 14px;
+    height: 18px;
+  }
+
+  .carousel-control-prev,
+  .carousel-control-next {
+    z-index: 0;
+    top: auto;
+    bottom: auto;
+  }
+
+  .carousel-indicators [data-bs-target] {
+    z-index: 0;
+    background-color: green;
+  }
+
+  .my_container {
+    position: relative;
+    display: flex;
+    z-index: 0;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .container2 {
+    top: 35px;
+    position: relative;
+  }
+
+  .button_cart {
+    display: inline-block;
+
+  }
+
+  .invisible {
+    display: none;
+  }
+  .center{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+   
+    align-items: center;
+  }
+
+</style>
+
+
+{% endblock %}
+
+{% block body %}
+
+<section class="container">
+  <div id="alert">
+
+    <!-- <div class="alert alert-warning alert-dismissible fade show" role="alert" id="alert">
+      <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+      <button type="button" class="close" id="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div> -->
+  
+  </div>
+</section>
+<div class="container2">
+
+  <div class="center">
+
+    <h5 class="my-4">BUS</h5>
+  </div>
+  <div class="my_container">
+    <div id="carouselExampleCaptions{{forloop.counter}}" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleCaptions{{forloop.counter}}" data-bs-slide-to="0"
+          class="active" aria-current="true" aria-label="Slide 1"></button>
+          {% for i in range %}
+        <button type="button" data-bs-target="#carouselExampleCaptions{{forloop.parentloop.counter}}"
+          data-bs-slide-to="{{i}}" aria-label='Slide {{i|add:1}}'></button>
+        {% endfor %}
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="image-container">
+            {% for product in bus %}
+            <!-- ye one se lek pura end tk jayega -->
+            <div class="card">
+              <img src="/media/{{product.image}}" class="d-block" alt="">
+              <input class="center title" id="name{{product.bus_id}}" name="name" value="{{product.name}}">
+              <!-- <h6 </h6> -->
+              <h6 class="center title" id="price{{product.bus_id}}">Seats- {{product.noOfSeats}}</h6>
+              <h6 class="center title" id="type{{product.bus_id}}">Type- {{product.Type}}</h6>
+              <h6 class="center title" id="nameC{{product.bus_id}}">Bus Conductor- {{product.busConductor}}</h6>
+              <h6 class="center title" id="phone{{product.bus_id}}">Contact Conductor- {{product.conductorPhone}}</h6>
+              <!-- <p class="para">{{i.desc|slice:"0:56"}}...</p>
+              <p class="my-4 mx-5 invisible">{{i.id}}</p> -->
+              <div class="cart_button">
+                <a href="/busview/{{product.bus_id}}" id="qv{{product.bus_id}}" class="btn btn-sm btn-primary">QuickView</a>
+              </div>
+            </div>
+            {% if forloop.counter|divisibleby:2 and forloop.counter > 0 and not forloop.last %}
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="image-container">
+            <!-- this second is closed for active one -->
+            {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="carousel-control-prev " type="button" data-bs-target="#carouselExampleCaptions{{forloop.counter}}"
+      data-bs-slide="prev">
+      <span class="carousel-control-prev-icon " aria-hidden="true"></span>
+      <span class="visually-hidden ">Previous</span>
+    </button>
+    <button class="carousel-control-next " type="button" data-bs-target="#carouselExampleCaptions{{forloop.counter}}"
+      data-bs-slide="next">
+      <span class="carousel-control-next-icon " aria-hidden="true"></span>
+      <span class="visually-hidden ">Next</span>
+    </button>
+
+  </div>
+</div>
+<!-- //This will close the my_container div -->
+
+
+</div>
+
+
+<main role="main">
+
+     <!-- Main jumbotron for a primary marketing message or call to action -->
+     <div class="jumbotron">
+      <div class="container1 display1">
+        <h1 class="display-3">Bus.in!</h1>
+            <p>BlueBus is the world's largest online bus ticket booking service trusted by over 25 million happy customers globally. BlueBus offers bus ticket booking through its website,iOS and Android mobile apps for all major routes.
+
+              Founded in 2006, BlueBus is part of India’s leading online travel company MakeMyTrip Limited (NASDAQ: MMYT). By providing widest choice, superior customer service, lowest prices and unmatched benefits, redBus has served over 18 million customers. BlueBus has a global presence with operations across Indonesia, Singapore, Malaysia, Colombia and Peru apart from India.
+              </p>
+            <p><a class="btn btn-primary btn-lg" href="/" role="button">Learn more »</a></p>
+      </div>
+    </div>
+  
+  
+  </main>
+{% endblock %}
+{% block js %}
+<script>
+   {% if logouts %}
+   document.getElementById('alert').innerHTML=` <div class="alert alert-success" role="alert" id="alert1">
+      <strong>Hey!</strong> You are successfully logout
+      <button type="button" class="close" id="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>`
+          
+          localStorage.clear()
+      {% endif %}
+  
+  {% if signups %}
+  document.getElementById('alert').innerHTML=` <div class="alert alert-success" role="alert" id="alert1">
+      <strong>Hey!</strong> You are successfully signed up
+      <button type="button" class="close" id="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>`
+          
+      {% endif %}
+  
+  {% if logins %}
+  document.getElementById('alert').innerHTML=` <div class="alert alert-success" role="alert" id="alert1">
+      <strong>Hey, {{firstName}}!</strong> You are successfully logged in
+      <button type="button" class="close" id="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>`
+    // alert("You are succesfully logged in {{email}} and {{firstName}} {{lastName}}")
+    {% endif %}
+  {% if error1 %}
+  document.getElementById('alert').innerHTML=` <div class="alert alert-success" role="alert" id="alert1">
+      <strong>Username</strong> must be under 10 characters 
+      <button type="button" class="close" id="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>`
+    // alert("You are succesfully logged in {{email}} and {{firstName}} {{lastName}}")
+    {% endif %}
+  {% if error2 %}
+  document.getElementById('alert').innerHTML=` <div class="alert alert-success" role="alert" id="alert1">
+      <strong> Username</strong> should only contain letters and numbers
+      <button type="button" class="close" id="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>`
+    // alert("You are succesfully logged in {{email}} and {{firstName}} {{lastName}}")
+    {% endif %}
+  {% if error3 %}
+  document.getElementById('alert').innerHTML=` <div class="alert alert-success" role="alert" id="alert1">
+      <strong>Passwords</strong>  do not match
+      <button type="button" class="close" id="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>`
+    // alert("You are succesfully logged in {{email}} and {{firstName}} {{lastName}}")
+    {% endif %}
+  {% if error4 %}
+  document.getElementById('alert').innerHTML=` <div class="alert alert-success" role="alert" id="alert1">
+      <strong>Invalid Credentials</strong>,Please try again
+      <button type="button" class="close" id="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>`
+    // alert("You are succesfully logged in {{email}} and {{firstName}} {{lastName}}")
+    {% endif %}
+  
+  {% if passenger_save %}
+  document.getElementById('alert').innerHTML=` <div class="alert alert-success" role="alert" id="alert1">
+      <strong>Hey,</strong> Your ticket is booked now
+      <button type="button" class="close" id="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>`
+    // alert("You are succesfully logged in {{email}} and {{firstName}} {{lastName}}")
+    {% endif %}
+  
+    $('.alert').on("click", "button.close", function(){
+      document.getElementById('alert').innerHTML=''
+    })
+    </script>
+{% endblock %}

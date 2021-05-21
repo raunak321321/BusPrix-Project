@@ -1,0 +1,155 @@
+{% extends 'BusTracking/basics.html' %}
+
+{% block title %}Contact Us-Mall.in{% endblock %}
+<i class="bi bi-telephone"></i>
+{% block css %}
+<style>
+  .container {
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: 60px;
+  }
+
+  .center {
+    text-align: center;
+  }
+
+
+  .mb-3 {
+    display: inline-block;
+  }
+  
+.number{
+  
+  display: inline-block;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+}
+  #extra img{
+    display: inline-block;
+    width: 35px;
+    height: 45px;
+  }
+ 
+</style>
+{% endblock %}
+{% block body %}
+<div class="container">
+  <div id="form">
+    {% if not user.is_authenticated %}
+    <form action="/query/" method="POST">{% csrf_token %}
+      <h3 class="center">Query-Section</h3>
+      <div class="mb-3 col-4">
+        <label for="name" class="form-label">Name</label>
+        <input type="name" class="form-control" id="name" name="name" placeholder="Enter your Name" required>
+      </div>
+      <div class="mb-3 col-4">
+        <label for="name" class="form-label">Email address</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="Enter your Email-ID">
+      </div>
+      <div class="mb-3 col-3">
+        <label for="name" class="form-label">Phone</label>
+        <input type="phone" class="form-control" id="phone" name="phone" placeholder="Enter your Phone-Number" required>
+      </div>
+      <div class="mb-3 col-12">
+        <label for="desc" class="form-label">How may we <strong>Help</strong> you</label>
+        <textarea class="form-control" id="desc" name="desc" rows="3"
+          placeholder="You may enter your suggestions and may ask queries-->if you have write here" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-success ">Submit</button>
+      {% endif %}
+    </form>
+  </div>
+  <div id="extra">
+    <h4 class="center">
+      Contact-Section<br>
+      If you have any emergency just call to us
+    </h4>
+      
+      <h6 class="number center location">
+        
+        <img class="nav-link " src="/media/BusTracking/images/location1.png" alt="error">
+        Rajasthan-Sikar
+      </h6>
+      <br>
+      <br>
+      <h6 class="number center gmail">
+        
+        <img class="nav-link " src="/media/BusTracking/images/gmail1.png" alt="error">
+        raunaksomani321@gmail.com
+      </h6>
+      <br>
+      <br>
+      <h6 class="number center">
+        
+        <img class="nav-link" src="/media/BusTracking/images/download.png" alt="error">
+        9351951340
+      </h6>
+      <br>
+      <br>
+      <h6 class="number center">
+        
+        <img class="nav-link" src="/media/BusTracking/images/download.png" alt="error">
+        9378954340 -- For tracking of bus via bus-id 
+      </h6>
+      <br>
+      <br>
+      
+      <h6 class="number center">
+        
+        <img class="nav-link" src="/media/BusTracking/images/telephone.jpg" alt="error">
+        01572-233343
+      
+      </h6>
+
+  </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+  {% if user.is_authenticated %}
+  name = localStorage.getItem('infoName')
+  pass_id = parseInt(localStorage.getItem('infoPass_id'))
+  document.getElementById('form').innerHTML = `<form action="/query/${pass_id}/" method="POST">{% csrf_token %} <h3 class="center">Query-Section</h3>
+  <h4 class="center">Hello, ${name} please tell us your email , phone number and query so that we may help you asap</h4>
+  <div class="mb-3 col-4">
+        <label for="name" class="form-label">Email address</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="Enter your Email-ID">
+      </div>
+    <div class="mb-3 col-3">
+        <label for="name" class="form-label">Phone</label>
+        <input type="phone" class="form-control" id="phone" name="phone" placeholder="Enter your Phone-Number" required>
+      </div>
+     
+      <div class="mb-3 col-12">
+        <label for="desc" class="form-label">How may we <strong>Help</strong> you</label>
+        <textarea class="form-control" id="desc" name="desc" rows="3" placeholder="You may enter your suggestions and may ask queries-->if you have write here" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-success ">Submit</button></form>`
+
+  {% endif %}
+  $(document).ready(function () {
+    var date_input = $('input[name="date"]'); //our date input has the name "date"
+    var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+    var options = {
+      format: 'yyyy-mm-dd',
+      container: container,
+      todayHighlight: true,
+      autoclose: true,
+    };
+    date_input.datepicker(options);
+  })
+  {% if query_save %}
+  name = localStorage.getItem('infoName')
+  if (name == "null") {
+    document.getElementById('extra').innerHTML = `<h4 class="center">Hii, {{names}} your Details and Query Submitted <strong>Successfully.</strong></h4><h5 class="center">We contact you <strong>Soon.</strong></h5>`
+  } 
+  else{
+    document.getElementById('extra').innerHTML = `<h4 class="center">Hii, ${name} your Details and Query Submitted <strong>Successfully.</strong></h4><h5 class="center">We contact you <strong>Soon.</strong></h5>`
+  }
+  {% endif %}
+</script>
+{% endblock %}

@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+    {% load static %}     
+
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+    <!-- Isolated Version of Bootstrap, not needed if your site already uses Bootstrap -->
+    <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" />
+    
+    <!-- Bootstrap Date-Picker Plugin -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+    <title>{% block title %}{% endblock %}</title>
+    <style>
+        body{
+            font-family: 'Playball', cursive;
+        }
+        .navbar-toggler-icon{
+            background-color: white;
+            color: red;
+        }
+       .navbar{
+         left: 0%;
+         right: 0%;
+           top: 0%;
+           margin: 0%;
+           padding: 0%;
+           height: max-content;
+           width: 100%;
+       }
+       
+       img{
+            display: inline-block;
+            border-radius: 10000px;
+            padding:0px ;
+            margin:0px ;
+            max-width: 200px;
+            height: 70px;
+        }
+        .nav-item{
+            display: inline-block;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: larger;
+
+        }
+        .nav-link{
+                width: 100%;
+                padding: 2px;
+                margin: 5px;
+
+        }
+        nav{
+            font-family: 'Playball', cursive;
+            display: flex;
+            position: fixed;
+            height: 85px;
+            position: fixed;
+            justify-content: center;
+            align-items: center;
+            opacity: 0.8;
+        }
+        .opacity{
+            z-index: 2;
+            opacity: 2;
+        }
+        .right{
+          right: 0%;
+          display: flex;
+          float: right;
+          width: max-content;
+        }
+    .login img{
+      float: right;
+      width: 120px;
+      height: 50px;
+    }
+    .user img{
+      float: right;
+      width: 70px;
+      height: 40px;
+    }
+    .signup img{
+      float: right;
+      width: 100px;
+      height: 50px;
+
+    }
+    .query img{
+      float: right;
+      width: 50px;
+      height: 50px;
+
+    }
+    
+  
+ 
+    </style>
+        {% block css %}
+        {% endblock %}
+
+        
+  </head>
+  <body>
+      <section class="navbar">
+          
+          <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+              <div class="container-fluid">
+          <a class="navbar-brand" href="/">Bus.in</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item bus">
+                        <img class="nav-link" src="{% static 'BusTracking/media/bus.jpg' %}" alt="error">
+              </li>
+              {% if user.is_authenticated %}
+              <li class="nav-item" id="givetickets">
+                  <a class="nav-link" aria-current="page" href="/ticketchecker">Your-Tickets</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-brand" href="/searchbus">Book-Tickets</a>
+                  </li>
+                  {% endif %}
+              <li class="nav-item" id="aboutus">
+
+                  <a class="nav-link nav-brand" href="/about">AboutUs</a>
+                  </li>
+              <li class="nav-item dropdown opacity">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      All Bus Station Cities
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {% for item in busstand %}
+                        <li><a class="dropdown-item">{{item.name|upper}}</a></li>
+                        {% endfor %}
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item">Only these cities have our bus station</a></li>
+                    </ul>
+                </li>
+               
+          
+          <div class="contact">
+                  <!-- <li class="nav-item" id="contact"> -->
+                    
+                    <a class="nav-link nav-brand query" href="/query"><img class="nav-link" src="/media/BusTracking/images/query.jpg" alt="error"></a>
+                  <!-- </li> -->
+                </div>
+                 <!-- Button signup and login modal -->
+                 {% if user.is_authenticated %}
+
+                   <li class="nav-item dropdown opacity">
+                     <a style="color: white;" class="nav-link dropdown-toggle user" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      User<img class="nav-link" src="/media/BusTracking/images/user1.jpg" alt="error">
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <li><a class="dropdown-item" href="/logout">Welcome-{{request.user}}</a></li>
+                      <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                    </ul>
+                  </li>
+                  {% else %}
+                  <!-- <a style="color: white;" type="button" class="btn btn-sm btn-primary nav-link nav-brand my-4 mx-2 login" data-bs-toggle="modal" data-bs-target="#loginmodal" id="login" data-container="body"
+                  data-toggle="popover" data-placement="bottom" data-html="true" >
+                  <img class="nav-link" src="/media/BusTracking/images/login.png" alt="error">
+                </a> -->
+                <div class="right">
+                  <a class="nav-link nav-brand login" type="button"  data-bs-toggle="modal" data-bs-target="#loginmodal" id="login" data-container="body"
+                  data-toggle="popover" data-placement="bottom" data-html="true"><img class="nav-link" src="/media/BusTracking/images/login.png" alt="error"></a>
+                  
+                  <!-- <a style="color: white;" type="button" class="btn btn-sm btn-primary nav-link nav-brand my-4 mx-2 signup" data-bs-toggle="modal" data-bs-target="#signupmodal">
+                    <img class="nav-link" src="/media/BusTracking/images/signup.png" alt="error">
+                  </a> -->
+                  <a class="nav-link nav-brand signup"  type="button"  data-bs-toggle="modal" data-bs-target="#signupmodal"><img class="nav-link" src="/media/BusTracking/images/sign.png" alt="error"></a>
+                </div>
+                  
+                {% endif %}
+              </div>
+            </div>
+</nav>
+</section>
+<!-- <div class="alert">
+
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+</div> -->
+
+  
+  <!-- signup modal -->
+  <div class="modal fade" id="signupmodal" tabindex="-1" aria-labelledby="signupmodal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="signupmodaltitle">SignUp</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action="/signup/" method="POST">{% csrf_token %}
+                <div class="mb-3">
+                  <label for="username" class="form-label">Username</label>
+                  <input type="name" class="form-control" id="username" aria-describedby="emailHelp" name="username" required>
+                </div>
+                <div class="mb-3">
+                  <label for="fname" class="form-label">First Name</label>
+                  <input type="name" class="form-control" id="fname" aria-describedby="emailHelp" name="fname" required>
+                </div>
+                <div class="mb-3">
+                  <label for="lname" class="form-label">last Name</label>
+                  <input type="name" class="form-control" id="lname" aria-describedby="emailHelp" name="lname" required>
+                </div>
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email" required>
+                </div>
+                <div class="mb-3">
+                  <label for="id" class="form-label">Adhaar ID</label>
+                  <input type="number" class="form-control" id="id" aria-describedby="emailHelp" name="id" required>
+                </div>
+                <div class="mb-3 col-12">
+                  <div class="bootstrap-iso">
+                      <div class="form-group"> <!-- Date input -->
+                        <label class="control-label" for="date">Birth-Date</label>
+                        <input class="form-control" id="bdate" name="bdate" placeholder="YYYY-MM-DD" type="text"/>
+                      </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                  <label for="password" class="form-label">Password</label>
+                  <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+                <div class="mb-3">
+                  <label for="password1" class="form-label">Confirm-Password</label>
+                  <input type="password" class="form-control" id="password1" name="password1" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  <!-- login modal -->
+  <div class="modal fade" id="loginmodal" tabindex="-1" aria-labelledby="loginmodal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="loginmodaltitle">Login</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action="/login/" method="POST">{% csrf_token %}
+                <div class="mb-3">
+                  <label for="username" class="form-label">Username</label>
+                  <input type="name" class="form-control" id="loginusername" aria-describedby="emailHelp" name="loginusername" required>
+                </div>
+                <div class="mb-3">
+                  <label for="pass" class="form-label">Password</label>
+                  <input type="password" class="form-control" id="loginpassword" name="loginpassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+    {% block body %}
+    {% endblock %}
+    
+
+
+ 
+    <!-- <div>
+        <input type="text" id="onward_cal" class="db" readonly="readonly" tabindex="3" data-caleng="">
+        <label for="onward_cal" class="db text-trans-uc">Date</label>
+        <div class="date-error">"Onward date should be before return date"</div>
+    </div> -->
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+    
+
+
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+    integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+    integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+    crossorigin="anonymous"></script> -->
+
+
+
+
+
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js" integrity="sha384-lpyLfhYuitXl2zRZ5Bn2fqnhNAKOAaM/0Kr9laMspuaMiZfGmfwRNFh8HlMy49eQ" crossorigin="anonymous"></script>
+    -->
+    
+    <script>
+    
+      $(document).ready(function(){
+        var date_input=$('input[name="bdate"]'); //our date input has the name "date"
+        var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+        var options={
+          format: 'yyyy-mm-dd',
+          container: container,
+          todayHighlight: true,
+          autoclose: true,
+        };
+        date_input.datepicker(options);
+      })
+     
+      {% if logins %}
+    localStorage.setItem('name',"{{firstName}} {{lastName}}")
+    localStorage.setItem('email',"{{email}}")
+    localStorage.setItem('pass_id',"{{pass_id}}")
+    localStorage.setItem('adhaarId',"{{adhaarId}}")
+    localStorage.setItem('birth_date',"{{birth_date}}")
+          
+      {% endif %}
+      {% if user.is_authenticated %}
+
+    localStorage.setItem('infoName',localStorage.getItem('name'))
+    localStorage.setItem('infoEmail',localStorage.getItem('email'))
+    localStorage.setItem('infoPass_id',localStorage.getItem('pass_id'))
+    localStorage.setItem('infoadhaarId',localStorage.getItem('adhaarId'))
+    localStorage.setItem('infobirth_date',localStorage.getItem('birth_date'))
+{% else %}
+localStorage.removeItem('infoName')
+localStorage.removeItem('infoEmail')
+localStorage.removeItem('infoPass_id')
+localStorage.removeItem('infoadhaarId')
+localStorage.removeItem('infobirth_date')
+    {% endif %}
+    {% if user.is_authenticated %}
+      pass_id = parseInt(localStorage.getItem('infoPass_id'))
+      document.getElementById('givetickets').innerHTML=`<a class="nav-link" aria-current="page" href="/ticketchecker/${pass_id}">SeeYourTickets</a>`
+
+      {% endif %}
+      </script>
+{% block js %}
+        {% endblock %}
+
+  </body>
+</html>
