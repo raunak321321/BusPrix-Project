@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Bus , Passenger , Tickets , Query , TripDate , Routes , BusStand , BookMultipleRoutesTickets , extenduser , passengerTicket
+from .models import Bus , Passenger , Tickets , Query , TripDate , Routes , BusStand , BookMultipleRoutesTickets , extenduser , passengerTicket , Seats
 
 admin.site.register(Bus)
 admin.site.register(Passenger) 
@@ -12,3 +12,4 @@ admin.site.register(BusStand)
 admin.site.register(BookMultipleRoutesTickets) 
 admin.site.register(extenduser) 
 admin.site.register(passengerTicket) 
+admin.site.register(Seats) 

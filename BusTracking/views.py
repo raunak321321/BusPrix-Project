@@ -1,7 +1,7 @@
 from django.shortcuts import render , redirect
 from django.http import HttpResponse 
 from math import ceil
-from .models import Tickets , Passenger , Query , Routes , BusStand , Bus ,extenduser ,TripDate , BookMultipleRoutesTickets , passengerTicket
+from .models import Tickets , Passenger , Query , Routes , BusStand , Bus ,extenduser ,TripDate , BookMultipleRoutesTickets , passengerTicket ,Seats
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
@@ -147,6 +147,8 @@ def searchbus(request):
     if request.method=="POST":
         destination = request.POST.get('cityT','')
         origin = request.POST.get('cityF','')   
+        date = request.POST.get('date','')
+        print(date)
         try: 
             busstandOrigin = BusStand.objects.filter(name = origin)
             busstandDestination = BusStand.objects.filter(name = destination)
@@ -159,10 +161,12 @@ def searchbus(request):
                 try:
                     route = Routes.objects.filter(destination = arrdestination[1],origin=arrorigin[1])
                     if(len(route)>0):
+                        
                         allbusid=[]
                         cost=[]
                         allarrival=[]
                         alldeparture=[]
+                        noOfSeatsAvailable=[]
                         for item in route:
                             departure = ((str(item)).split())[6]
                             arrival = ((str(item)).split())[5]
@@ -171,7 +175,28 @@ def searchbus(request):
                             strid = str(item)
                             arrid = strid.split()
                             allbusid.append([arrid[2]])
+                            bus1 = Bus.objects.filter(bus_id=arrid[2]).values('noOfSeats')
+                            # print(bus[0]['noOfSeats'])
                             cost.append([arrid[4]])
+                            route_id = int(((str(item)).split())[3])
+
+
+                            seat = Seats.objects.filter(route=route_id,tripdate=date).values('noOfSeatsBooked')
+                            if(len(seat)>0):
+                                # print("if")
+                                noOfSeatsAvailable.append([str((bus1[0]['noOfSeats'])-(seat[0]['noOfSeatsBooked']))])
+                                # print(str((bus[0]['noOfSeats'])-(seat[0]['noOfSeatsBooked'])))
+                                pass
+                            else:
+                                # print("in else")
+                                routes = Routes.objects.get(route_id=route_id)
+                                seats = Seats(route=routes,tripdate=date)
+                                seats.save()
+                                seatsstr = str(seats)
+                                seatsarr = seatsstr.split()
+                                noOfSeatsBooked = (seatsarr[0])
+                                noOfSeatsAvailable.append([str(bus1[0]['noOfSeats']-int(noOfSeatsBooked))])
+                                # print(noOfSeatsBooked)
                         allbusobj = []
                         i=0
                         for item in allbusid:
@@ -179,9 +204,12 @@ def searchbus(request):
                             cost1 = int(cost[i][0])
                             arrival1 = (allarrival[i][0])
                             departure1 = (alldeparture[i][0])
+                            # print("upper")
+                            noOfSeatsAvailable1= noOfSeatsAvailable[i][0]
+                            # print("Below")
                             bus = Bus.objects.filter(bus_id=intid).values('bus_id','name','Type','noOfSeats','busConductor','conductorPhone','image')
                             i+=1
-                            allbusobj.append([bus,cost1,arrival1,departure1])
+                            allbusobj.append([bus,cost1,arrival1,departure1,noOfSeatsAvailable1])
                         strroute = (str)(route[0])
                         arrroute = strroute.split()
                         route_id = arrroute[3]
@@ -189,7 +217,8 @@ def searchbus(request):
                         n = len(allbusobj)
                         n_slides = n//2 + ceil((n/2)-(n//2))
                         r = 1
-                        return render(request,'BusTracking/searchbus.html',{"route":route,"allbusobj":allbusobj,"thank":thank,"busstand":busstand,"destination":destination,"origin":origin,"range":range(1,n_slides),"r":r})
+                        ro = False
+                        return render(request,'BusTracking/searchbus.html',{"route":route,"allbusobj":allbusobj,"thank":thank,"busstand":busstand,"destination":destination,"origin":origin,"range":range(1,n_slides),"r":r,"date":date,"ro":ro})
                     else:
                         route1 = Routes.objects.filter(destination=arrdestination[1])
                         route2 = Routes.objects.filter(origin=arrorigin[1])
@@ -268,7 +297,10 @@ def searchbus(request):
                                         routes_id.append(route_id)    
                                         pass
                                 cost = 0
+                                noOfSeatsAvailable = 0
+                                noOfSeatsAvailable1 = []
                                 for itemss in routes_id:
+                                    
                                     routes = Routes.objects.filter(route_id = itemss)
                                     routesOrigin = Routes.objects.filter(route_id = itemss,origin=arrorigin[1])
                                     if len(routesOrigin)>0:
@@ -281,16 +313,41 @@ def searchbus(request):
                                         # print(routedDestination)
                                     arrroutes = str(routes[0]).split()
                                     cost = cost + int(arrroutes[4])
+                                    bus1 = Bus.objects.filter(bus_id=item).values('noOfSeats')
+                                    seat = Seats.objects.filter(route=itemss,tripdate=date).values('noOfSeatsBooked')
+                                    if(len(seat)>0):
+                                        # print("if")
+                                        noOfSeatsAvailable1.append(bus1[0]['noOfSeats']-seat[0]['noOfSeatsBooked'])
+                                        # print("afterif")
+                                        # print(str((bus[0]['noOfSeats'])-(seat[0]['noOfSeatsBooked'])))
+                                        pass
+                                    else:
+                                        # print("in else")
+                                        routes = Routes.objects.get(route_id=itemss)
+                                        seats = Seats(route=routes,tripdate=date)
+                                        seats.save()
+                                        seatsstr = str(seats)
+                                        seatsarr = seatsstr.split()
+                                        noOfSeatsBooked = seatsarr[0]
+                                        noOfSeatsAvailable1.append(bus1[0]['noOfSeats']-int(noOfSeatsBooked))
+                                # print(noOfSeatsAvailable1)
+                                noOfSeatsAvailable1.sort()
+                                noOfSeatsAvailable = noOfSeatsAvailable1[0]
+                                # for ite in noOfSeatsAvailable1:
+                                    # print(ite)
                                 # print(routes_id)
                                 # print(item)
                                 # print(cost)
                                 bus = Bus.objects.filter(bus_id=item).values('bus_id','name','Type','noOfSeats','busConductor','conductorPhone','image')
+                                
                                 routesid = routes_id
-                                allbusobj.append([bus,cost,originstationtime,destinationstationtime,routesid,routedOrigin,routedDestination,])
+                                # print(routesid)
+                                allbusobj.append([bus,cost,originstationtime,destinationstationtime,routesid,routedOrigin,routedDestination,noOfSeatsAvailable])
 
                             thank = True
                             r = 2
-                            return render(request,'BusTracking/searchbus.html',{"busstand":busstand,"number":number,"thank":thank,"allbusobj":allbusobj,"destination":destination,"origin":origin,"r":r})
+                            ro =True
+                            return render(request,'BusTracking/searchbus.html',{"busstand":busstand,"number":number,"thank":thank,"allbusobj":allbusobj,"destination":destination,"origin":origin,"r":r,"date":date,"ro":ro})
                         else:
                             error1 = True
                             return render(request,'BusTracking/searchbus.html',{"busstand":busstand,"number":number,"error1":error1})
@@ -314,8 +371,9 @@ def pass_info(request,myid,pass_id,number):
         Pass_id = Passenger.objects.get(pass_id=pass_id)
         for x in range(1,number+1):
             
-            print('date'+str(x))
+            # print('date'+str(x))
             tripDate = request.POST.get(('date'+str(x)),'')
+            # print(tripDate)
             name = request.POST.get(('name'+str(x)),'')
             # print(name)
             adhaarid = request.POST.get(('id'+str(x)),'')
@@ -338,6 +396,11 @@ def pass_info(request,myid,pass_id,number):
             Route_id = Routes.objects.get(route_id=route_id)
             Trip = TripDate.objects.get(trip_id=trip_id)
             ticket = Tickets(passenger=Pass_id,routes=Route_id,trip=Trip,ticketpassenger=Passticket)
+            seat = Seats.objects.filter(route=route_id,tripdate=tripDate)
+            bookedseats=int(str(seat[0]))
+            seat1 = Seats.objects.filter(route=route_id,tripdate=tripDate).update(noOfSeatsBooked=bookedseats+1)
+            # print(int(str(seat1[0])))
+            # print(seat1)
             ticket.save()
             strTicket_id = (str)(ticket)
             arrTicket_id = strTicket_id.split()
@@ -360,6 +423,9 @@ def bookpass_info(request,pass_id,number):
         rdid = request.POST.get('rdid','')
         roid = Routes.objects.get(route_id=roid)
         rdid = Routes.objects.get(route_id=rdid)
+        routesid = request.POST.get('routeid','')
+        arrroutesid = routesid.split()
+        # print(arrroutesid)
         for x in range(1,number+1):
             tripDate = request.POST.get(('date'+str(x)),'')
             name = request.POST.get(('name'+str(x)),'')
@@ -376,12 +442,16 @@ def bookpass_info(request,pass_id,number):
             tripdate = TripDate(tripDate=tripDate)
             tripdate.save()
             Passticket = passengerTicket.objects.get(pass_id = passticketid)
-            routesid = request.POST.get('routeid','')
             arrtripdate=(str(tripdate)).split()
             trip_id = int(arrtripdate[0])
             Trip = TripDate.objects.get(trip_id=trip_id)
             ticket = BookMultipleRoutesTickets(passenger=Pass_id,routes=routesid,trip=Trip,routeOrigin=roid,cost=cost,routeDestination=rdid,ticketpassenger=Passticket)
             ticket.save()
+            for items in arrroutesid:
+                item = int(items)
+                seat = Seats.objects.filter(route=item,tripdate=tripDate)
+                bookedseats=int(str(seat[0]))
+                seat1 = Seats.objects.filter(route=item,tripdate=tripDate).update(noOfSeatsBooked=bookedseats+1)
             strTicket_id = (str)(ticket)
             arrTicket_id = strTicket_id.split()
             ticket_id = (int)(arrTicket_id[0])

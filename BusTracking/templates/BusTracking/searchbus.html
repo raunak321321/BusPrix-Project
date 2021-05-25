@@ -149,14 +149,24 @@ opacity: 1;
     </div>
     <form class="my-10 mx-10 style" action="/searchbus/" method="POST">{% csrf_token %}
 
-        <div class="input-group mb-3 my-10 ">
+        <div class="input-group form-group mb-3 my-10 ">
+          <div class="col-2">
+
             <input type="city" class="form-control color my-10" placeholder="To" aria-label="Username" name="cityT">
-            <span class="input-group-text">@</span>
+          </div>
+          <span class="input-group-text">@</span>
+          <div class="col-2">
+
             <input type="city" class="form-control color" placeholder="From" aria-label="Server" name="cityF">
-            <button style="background-color: rgb(211, 81, 71);" type="submit" class="btn btn-primary">Search Buses</button>
-        </div>
+          </div>
+            <span class="input-group-text">@</span>
+            <div class="col-3">
+              <input class="form-control color my-10" id="date{{forloop.counter}}" name="date{{forloop.counter}}" placeholder="Date-YYYY-MM-DD" type="text"/>
+
+            </div>
+              <button style="background-color: rgb(211, 81, 71);" type="submit" class="btn btn-primary">Search Buses</button>
     </form>
-    <div id="extra">
+    <div id="extra" style="display: block;">
 
     </div>
 </section>
@@ -171,6 +181,17 @@ opacity: 1;
 
 {% block js %}
 <script>
+   $(document).ready(function(){
+      var date_input=$('input[name="date"]'); //our date input has the name "date"
+      var container=$('.input-group form').length>0 ? $('.input-group form').parent() : "body";
+      var options={
+        format: 'yyyy-mm-dd',
+        container: container,
+        todayHighlight: true,
+        autoclose: true,
+      };
+      date_input.datepicker(options);
+    })
  pass_id =  localStorage.getItem('infoPass_id')
     {% if passenger_save %}
 alert("Thanks for booking ticket.Your ticket id is {{ticket_id}} and passenger id is {{pass_id}}.Please store these values.And for tickets just click on the 'SeeYourTickets' link which is seen just above when you click on ok button.Thanks")
@@ -187,6 +208,7 @@ document.getElementById('extraerror').innerHTML=`<h6 style="color:red">At presen
 document.getElementById('extraerror').innerHTML=`<h6 style="color:red">Please check your spelling once again </h6>`
     {% endif %}
     {% if thank %}
+    localStorage.setItem('date','{{date}}')
     document.getElementById('extra').innerHTML = `<img src="/media/Bustracking/images/scroll.png" class="d-block" alt="">`
     
     document.getElementById('extra1').innerHTML = `<div class="container2">
@@ -219,17 +241,22 @@ document.getElementById('extraerror').innerHTML=`<h6 style="color:red">Please ch
             <input style="display: none;" class="center title" id="nameC{{product.0.0.bus_id}}" name="conduc" value="Bus Conductor- {{product.0.0.busConductor}}">
             <input class="center title" id="To{{product.0.0.bus_id}}" name="to" value="To- {{destination}}">
             <input class="center title" id="From{{product.0.0.bus_id}}" name="from" value="From- {{origin}}">
-            <input class="center title" id="From{{product.0.0.bus_id}}" name="arrival" value="Arrival at(tentative)- {{product.2}}">
-            <input class="center title" id="From{{product.0.0.bus_id}}" name="arrival" value="Arrival at destination(tentative)- {{product.3}}">
+            <input class="center title" id="ao{{product.0.0.bus_id}}" name="arrival" value="Arrival at(tentative)- {{product.2}}">
+            <input class="center title" id="ad{{product.0.0.bus_id}}" name="arrival" value="Arrival at destination(tentative)- {{product.3}}">
             <input style="display: none;" class="center title" id="phone{{product.0.0.bus_id}}" name="cc" value="Contact Conductor- {{product.0.0.conductorPhone}}">
             <input class="center title" id="cost{{product.0.0.bus_id}}" name="cost" value="Cost- {{product.1}}">
+            {% if ro %}
+            <input class="center title" id="seats{{product.0.0.bus_id}}" name="seats" value="Seats Available- {{product.7}}">
+            {% else %}
+            <input class="center title" id="seats{{product.0.0.bus_id}}" name="seats" value="Seats Available- {{product.4}}">
+            {% endif %}
             <input class="center title" id="ond{{product.0.0.bus_id}}" name="ond" value="for {{origin}} to {{destination}}">
             <input style="display: none;" class="center title" id="r{{product.0.0.bus_id}}" name="r" value="{{r}}">
             <input style="display: none;" class="center title" id="rid{{product.0.0.bus_id}}" name="rid" value="{% for item in product.4 %}{{item}} {% endfor %}">
             <input style="display: none;" class="center title" id="roid{{product.0.0.bus_id}}" name="roid" value="{{product.5}}">
             <input style="display: none;" class="center title" id="rdid{{product.0.0.bus_id}}" name="rdid" value="{{product.6}}">
             <label for="number" class="form-label">No of Tickets</label>
-                  <input type="number" class="form-control" id="number" aria-describedby="emailHelp" name="number" required>
+                  <input type="number" class="form-control" id="number{{product.0.0.bus_id}}" aria-describedby="emailHelp" name="number" required>
             <div class="cart_button">
                 <button id="button{{product.0.0.bus_id}}" class="btn btn-sm btn-primary" type="submit">Book Tickets</button>
               </div>

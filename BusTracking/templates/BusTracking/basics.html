@@ -161,7 +161,7 @@
 
                    <li class="nav-item dropdown opacity">
                      <a style="color: white;" class="nav-link dropdown-toggle user" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      User<img class="nav-link" src="/media/BusTracking/images/user1.jpg" alt="error">
+                      <img class="nav-link" src="/media/BusTracking/images/user1.jpg" alt="error">User
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                       <li><a class="dropdown-item" href="/logout">Welcome-{{request.user}}</a></li>
@@ -363,7 +363,7 @@ localStorage.removeItem('infobirth_date')
     {% endif %}
     {% if user.is_authenticated %}
       pass_id = parseInt(localStorage.getItem('infoPass_id'))
-      document.getElementById('givetickets').innerHTML=`<a class="nav-link" aria-current="page" href="/ticketchecker/${pass_id}">SeeYourTickets</a>`
+      document.getElementById('givetickets').innerHTML=`<a class="nav-link" aria-current="page" href="/ticketchecker/${pass_id}">Your-Tickets</a>`
 
       {% endif %}
       </script>

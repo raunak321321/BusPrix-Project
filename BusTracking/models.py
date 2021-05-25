@@ -109,6 +109,16 @@ class passengerTicket(models.Model):
     def __str__(self):
         return " ".join([str(self.pass_id),self.name])
 
+class Seats(models.Model):
+    noOfSeatsBooked = models.IntegerField(default=0)
+    route = models.ForeignKey("Routes",on_delete=models.CASCADE)
+    tripdate = models.DateField(default=date.today())
+
+    def __str__(self):
+        return str(self.noOfSeatsBooked)
+
+# the main thing in seats models is that we have to create seats columns for all bus and routes there is no need to put any tripdate as it is defalut to today date 
+
 
 
 
