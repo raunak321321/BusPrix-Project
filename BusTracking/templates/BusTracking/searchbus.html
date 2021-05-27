@@ -152,16 +152,16 @@ opacity: 1;
         <div class="input-group form-group mb-3 my-10 ">
           <div class="col-2">
 
-            <input type="city" class="form-control color my-10" placeholder="To" aria-label="Username" name="cityT">
+            <input type="city" class="form-control color my-10" placeholder="To" aria-label="Username" name="cityT" required>
           </div>
           <span class="input-group-text">@</span>
           <div class="col-2">
 
-            <input type="city" class="form-control color" placeholder="From" aria-label="Server" name="cityF">
+            <input type="city" class="form-control color" placeholder="From" aria-label="Server" name="cityF" required>
           </div>
             <span class="input-group-text">@</span>
             <div class="col-3">
-              <input class="form-control color my-10" id="date{{forloop.counter}}" name="date{{forloop.counter}}" placeholder="Date-YYYY-MM-DD" type="text"/>
+              <input class="form-control color my-10" id="date{{forloop.counter}}" name="date{{forloop.counter}}" placeholder="Date-YYYY-MM-DD" type="text" required/>
 
             </div>
               <button style="background-color: rgb(211, 81, 71);" type="submit" class="btn btn-primary">Search Buses</button>
@@ -255,8 +255,13 @@ document.getElementById('extraerror').innerHTML=`<h6 style="color:red">Please ch
             <input style="display: none;" class="center title" id="rid{{product.0.0.bus_id}}" name="rid" value="{% for item in product.4 %}{{item}} {% endfor %}">
             <input style="display: none;" class="center title" id="roid{{product.0.0.bus_id}}" name="roid" value="{{product.5}}">
             <input style="display: none;" class="center title" id="rdid{{product.0.0.bus_id}}" name="rdid" value="{{product.6}}">
+            {% if ro %}
             <label for="number" class="form-label">No of Tickets</label>
-                  <input type="number" class="form-control" id="number{{product.0.0.bus_id}}" aria-describedby="emailHelp" name="number" required>
+            <input type="number" class="form-control" id="number{{product.0.0.bus_id}}" aria-describedby="emailHelp" name="number" min="1" max="{{product.7}}" required/>
+            {% else %}
+            <label for="number" class="form-label">No of Tickets</label>
+            <input type="number" class="form-control" id="number{{product.0.0.bus_id}}" aria-describedby="emailHelp" name="number" min="1" max="{{product.4}}" required/>
+            {% endif %}
             <div class="cart_button">
                 <button id="button{{product.0.0.bus_id}}" class="btn btn-sm btn-primary" type="submit">Book Tickets</button>
               </div>
@@ -288,6 +293,7 @@ document.getElementById('extraerror').innerHTML=`<h6 style="color:red">Please ch
 </div>
 </div>
 </div>`
+
     {% endif %}
 </script>
 {% endblock %}

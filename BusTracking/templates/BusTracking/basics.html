@@ -101,8 +101,67 @@
       height: 50px;
 
     }
+    .success{
+      display: none;
+        font-size: small;
+        color: green;
+    }
+    .error{
+      display: none;
+      font-size: small;
+      color: red;
+
+    }
+    .dropdown-menu li{
+        opacity: 1;
+    }
+    .img1{
+      display: inline-block;
+    }
+    input{
+      display: inline-block;
+      width: max-content;
+    }
     
+    .mb-3{
+      display: flex;
+    }
+    .form-group{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   
+    .mb-3 img{
+      border-radius: 5px;
+      margin: 2px;
+      padding: 2px;
+      height: 40px;
+      width: 40px;
+    }
+    .btn-primary{
+      font-size: 1.2rem;
+      width: fit-content;
+      background-color: #141a07;
+
+    }
+    .btn-primary:hover{
+      background-color: #4a474c;
+
+    }
+   
+    .signup{
+      width: max-content;
+      background-color: #4a474c;
+    }
+    .signup:hover{
+      width: max-content;
+      background-color: #746d7a;
+    }
+   
+    .dropdown-menu li a{
+      z-index: 2;
+    }
  
     </style>
         {% block css %}
@@ -114,35 +173,35 @@
       <section class="navbar">
           
           <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-              <div class="container-fluid">
-          <a class="navbar-brand" href="/">Bus.in</a>
+              <div class="container-fluid mx-4">
+          <a class="navbar-brand mx-4" href="/"><strong>Bus.in</strong></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="collapse navbar-collapse mx-4" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item bus">
                         <img class="nav-link" src="{% static 'BusTracking/media/bus.jpg' %}" alt="error">
               </li>
               {% if user.is_authenticated %}
-              <li class="nav-item" id="givetickets">
-                  <a class="nav-link" aria-current="page" href="/ticketchecker">Your-Tickets</a>
+              <li class="nav-item mx-4" id="givetickets">
+                  <a class="nav-link" aria-current="page" href="/ticketchecker"><strong>Your-Tickets</strong></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-brand" href="/searchbus">Book-Tickets</a>
+                <li class="nav-item mx-4">
+                    <a class="nav-link nav-brand" href="/searchbus"><strong>Book-Tickets</strong></a>
                   </li>
                   {% endif %}
-              <li class="nav-item" id="aboutus">
+              <li class="nav-item mx-4" id="aboutus">
 
-                  <a class="nav-link nav-brand" href="/about">AboutUs</a>
+                  <a class="nav-link nav-brand" href="/about"><strong>AboutUs</strong></a>
                   </li>
-              <li class="nav-item dropdown opacity">
+              <li class="nav-item dropdown opacity mx-4">
                   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      All Bus Station Cities
+                      <strong>All-Station</strong> 
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         {% for item in busstand %}
-                        <li><a class="dropdown-item">{{item.name|upper}}</a></li>
+                        <li><a class="dropdown-item"><strong>{{item.name|upper}}</strong></a></li>
                         {% endfor %}
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item">Only these cities have our bus station</a></li>
@@ -153,7 +212,7 @@
           <div class="contact">
                   <!-- <li class="nav-item" id="contact"> -->
                     
-                    <a class="nav-link nav-brand query" href="/query"><img class="nav-link" src="/media/BusTracking/images/query.jpg" alt="error"></a>
+                    <a class="nav-link nav-brand query my-4 mx-4" href="/query"><strong>Query</strong></a>
                   <!-- </li> -->
                 </div>
                  <!-- Button signup and login modal -->
@@ -161,26 +220,31 @@
 
                    <li class="nav-item dropdown opacity">
                      <a style="color: white;" class="nav-link dropdown-toggle user" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      <img class="nav-link" src="/media/BusTracking/images/user1.jpg" alt="error">User
+                      <strong>Welcome-{{request.user}}</strong>
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <li><a class="dropdown-item" href="/logout">Welcome-{{request.user}}</a></li>
-                      <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                    <ul class="dropdown-menu mx-4" aria-labelledby="navbarDropdown">
+                      <li><img src="/media/BusTracking/images/user1.jpg" alt="error"></li>
+                      <li><hr class="dropdown-divider"></li>
+                      
+                      <li>
+                          <a class="dropdown-item" href="/logout"><strong>Logout</strong></a>
+                      </li>
                     </ul>
                   </li>
                   {% else %}
-                  <!-- <a style="color: white;" type="button" class="btn btn-sm btn-primary nav-link nav-brand my-4 mx-2 login" data-bs-toggle="modal" data-bs-target="#loginmodal" id="login" data-container="body"
+                  <a style="color: white;" type="button" class="btn btn-sm btn-primary nav-link nav-brand my-4 mx-4 login" data-bs-toggle="modal" data-bs-target="#loginmodal" id="login" data-container="body"
                   data-toggle="popover" data-placement="bottom" data-html="true" >
-                  <img class="nav-link" src="/media/BusTracking/images/login.png" alt="error">
-                </a> -->
-                <div class="right">
-                  <a class="nav-link nav-brand login" type="button"  data-bs-toggle="modal" data-bs-target="#loginmodal" id="login" data-container="body"
-                  data-toggle="popover" data-placement="bottom" data-html="true"><img class="nav-link" src="/media/BusTracking/images/login.png" alt="error"></a>
+                  <strong>Login</strong>
+                </a>
+                <!-- <div class="right">
+                  <a class="nav-link nav-brand login my-4" type="button"  data-bs-toggle="modal" data-bs-target="#loginmodal" id="login" data-container="body"
+                  data-toggle="popover" data-placement="bottom" data-html="true">Login</a> -->
                   
                   <!-- <a style="color: white;" type="button" class="btn btn-sm btn-primary nav-link nav-brand my-4 mx-2 signup" data-bs-toggle="modal" data-bs-target="#signupmodal">
                     <img class="nav-link" src="/media/BusTracking/images/signup.png" alt="error">
                   </a> -->
-                  <a class="nav-link nav-brand signup"  type="button"  data-bs-toggle="modal" data-bs-target="#signupmodal"><img class="nav-link" src="/media/BusTracking/images/sign.png" alt="error"></a>
+
+                    <a class="nav-link nav-brand signup mx-4"  type="button"  data-bs-toggle="modal" data-bs-target="#signupmodal"><img class="nav-link" src="/media/BusTracking/images/sign.png" alt="error"></a>
                 </div>
                   
                 {% endif %}
@@ -204,48 +268,96 @@
   <div class="modal fade" id="signupmodal" tabindex="-1" aria-labelledby="signupmodal" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="signupmodaltitle">SignUp</h5>
+        <div class="modal-header center">
+          <img class="img1" src="/media/BusTracking/images/hello.jpg" alt="error">
+          <h5 class="modal-title center" id="signupmodaltitle"><strong>Signup</strong></h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
             <form action="/signup/" method="POST">{% csrf_token %}
                 <div class="mb-3">
-                  <label for="username" class="form-label">Username</label>
-                  <input type="name" class="form-control" id="username" aria-describedby="emailHelp" name="username" required>
+                  <img class="img1" src="/media/BusTracking/images/username.jfif" alt="error">
+                  <input type="name" class="form-control" id="username" aria-describedby="emailHelp" name="username" placeholder="Username" required>
                 </div>
+                  <div class="success" id="sname">
+                    Hello
+                  </div>
+                  <div class="error" id="ename">
+                    Hello
+                  </div>
                 <div class="mb-3">
-                  <label for="fname" class="form-label">First Name</label>
-                  <input type="name" class="form-control" id="fname" aria-describedby="emailHelp" name="fname" required>
+                  <input type="name" class="form-control" id="fname" aria-describedby="emailHelp" name="fname" required placeholder="First-Name">
                 </div>
+                  <div class="success" id="sfname">
+                    Hello
+                  </div>
+                  <div class="error" id="efname">
+                    Hello
+                  </div>
                 <div class="mb-3">
-                  <label for="lname" class="form-label">last Name</label>
-                  <input type="name" class="form-control" id="lname" aria-describedby="emailHelp" name="lname" required>
+                  <input type="name" class="form-control" id="lname" aria-describedby="emailHelp" name="lname" required placeholder="Last-Name">
                 </div>
+                    <div class="success" id="slname">
+                    Hello
+                  </div>
+                  <div class="error" id="lname">
+                    Hello
+                  </div>
                 <div class="mb-3">
-                  <label for="email" class="form-label">Email</label>
-                  <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email" required>
+                  <img class="img1" src="/media/BusTracking/images/gmail1.png" alt="error">
+                  <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email" required placeholder="Email">
                 </div>
+                    <div class="success" id="semail">
+                    Hello
+                  </div>
+                  <div class="error" id="eemail">
+                    Hello
+                  </div>
+
                 <div class="mb-3">
-                  <label for="id" class="form-label">Adhaar ID</label>
-                  <input type="number" class="form-control" id="id" aria-describedby="emailHelp" name="id" required>
+                  <img class="img1" src="/media/BusTracking/images/id.jpg" alt="error">
+                  <input type="number" class="form-control" id="id" aria-describedby="emailHelp" name="id" required placeholder="Adhaar-ID">
                 </div>
-                <div class="mb-3 col-12">
-                  <div class="bootstrap-iso">
+                    <div class="success" id="sid">
+                    Hello
+                  </div>
+                  <div class="error" id="eid">
+                    Hello
+                  </div>
+                  <div class="mb-3 col-12">
+                      <div class="bootstrap-iso">
                       <div class="form-group"> <!-- Date input -->
-                        <label class="control-label" for="date">Birth-Date</label>
-                        <input class="form-control" id="bdate" name="bdate" placeholder="YYYY-MM-DD" type="text"/>
+                  <img class="img1" src="/media/BusTracking/images/calendar.jpg" alt="error">
+                        <input class="form-control" name="bdate" type="text" required placeholder="Birth-Date">
+                          <div class="success" id="sbdate">
+                    Hello
+                  </div>
+                  <div class="error" id="ebdate">
+                    Hello
+                  </div>
                       </div>
                     </div>
                 </div>
                 <div class="mb-3">
-                  <label for="password" class="form-label">Password</label>
-                  <input type="password" class="form-control" id="password" name="password" required>
+                  <img class="img1" src="/media/BusTracking/images/password.jpg" alt="error">
+                  <input type="password" class="form-control" id="password" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required title="Password must be of 8 characters atleast and must have some special characters." placeholder="Password">
                 </div>
+                    <div class="success" id="spass1">
+                    Hello
+                  </div>
+                  <div class="error" id="epass1">
+                    Hello
+                  </div>
                 <div class="mb-3">
-                  <label for="password1" class="form-label">Confirm-Password</label>
-                  <input type="password" class="form-control" id="password1" name="password1" required>
+                  <img class="img1" src="/media/BusTracking/images/password.jpg" alt="error">
+                  <input type="password" class="form-control" id="password1" name="password1" required placeholder="Confirm-Password">
                 </div>
+                    <div class="success" id="spass2">
+                    Hello
+                  </div>
+                  <div class="error" id="epass2">
+                    Hello
+                  </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
               </form>
         </div>
@@ -260,21 +372,22 @@
   <div class="modal fade" id="loginmodal" tabindex="-1" aria-labelledby="loginmodal" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="loginmodaltitle">Login</h5>
+        <div class="modal-header center">
+          <h5 class="modal-title center" id="loginmodaltitle"><strong>Login</strong></h5>
+          <img class="nav-link" src="/media/BusTracking/images/login.png" alt="error">
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
             <form action="/login/" method="POST">{% csrf_token %}
                 <div class="mb-3">
-                  <label for="username" class="form-label">Username</label>
-                  <input type="name" class="form-control" id="loginusername" aria-describedby="emailHelp" name="loginusername" required>
+                  <img class="img1" src="/media/BusTracking/images/username.jfif" alt="error">
+                  <input type="name" class="form-control" id="loginusername" aria-describedby="emailHelp" name="loginusername" required placeholder="Username">
                 </div>
                 <div class="mb-3">
-                  <label for="pass" class="form-label">Password</label>
-                  <input type="password" class="form-control" id="loginpassword" name="loginpassword" required>
+                  <img class="img1" src="/media/BusTracking/images/password.jpg" alt="error">
+                  <input type="password" class="form-control" id="loginpassword" name="loginpassword" required placeholder="Password">
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary center">Submit</button>
               </form>
         </div>
         <!-- <div class="modal-footer">
@@ -288,8 +401,7 @@
     {% block body %}
     {% endblock %}
     
-
-
+  
  
     <!-- <div>
         <input type="text" id="onward_cal" class="db" readonly="readonly" tabindex="3" data-caleng="">
@@ -326,6 +438,37 @@
     -->
     
     <script>
+   
+$("input[name=id]").on("blur", function(e){
+     var myval = $(this).val();
+ 
+     if(myval.length < 12 || myval.length>12) {
+         id =  document.getElementById('eid')
+         id.style.display = "block";
+         id.innerHTML  = `Please enter 12 digits`
+          $(this).focus();
+     }
+     else{
+      id =  document.getElementById('eid')
+         id.style.display = "none";
+     }
+});
+$("input[name=password1]").on("blur", function(e){  
+     var myval = $(this).val();
+     var myval1 = $("input[name=password]").val();
+ 
+     
+     if((myval1!=myval)) {
+         id =  document.getElementById('epass2')
+         id.style.display = "block";
+         id.innerHTML  = `Passwords are not matched!`
+          $(this).focus();
+     }
+     else{
+      id =  document.getElementById('epass2')
+         id.style.display = "none";
+     }
+});
     
       $(document).ready(function(){
         var date_input=$('input[name="bdate"]'); //our date input has the name "date"

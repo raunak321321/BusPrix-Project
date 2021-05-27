@@ -6,7 +6,6 @@
 
 {% block css %}
 <style>
-
     .container{
       position: relative;
         margin: 0%;
@@ -15,7 +14,6 @@
 height: 600px;
 max-width: 100%;
 z-index: -1;
-
 /* justify-content: center;
 align-items: center;     */
 }
@@ -24,8 +22,6 @@ align-items: center;     */
   padding: 0%;
   /* margin: 0%; */
 }
-
-
 .container::before{
     /* background: url({% static 'BusTracking/media/image3.jpg' %})no-repeat; */
 background: url('/media/BusTracking/images/image7.jpg') no-repeat center/cover;
@@ -35,9 +31,7 @@ width: 100%;
 height: 100%;
 z-index: -1;
 opacity: 0.9;
-
 /* background: url('static/BusTracking/media/image4.jpg')no-repeat right; */
-
 }
 #close{
   margin: 0%;
@@ -46,7 +40,7 @@ opacity: 0.9;
 }
 
 .container1{
-    position: relative;
+    position: absolute; 
         display: flex;
         justify-content: center;
         align-items: center;
@@ -145,6 +139,60 @@ opacity: 0.9;
    
     align-items: center;
   }
+  footer
+{
+    background: black;
+    position: relative;
+    color: white;
+    padding: 9px 20px;
+}
+footer #time{
+    /* display: inline; */
+    /* float: left; */
+    /* background-color: aliceblue; */
+    /* color: white; */
+    color: white;
+    position: sticky;
+    /* right: 0px; */
+}
+#client-section
+{
+  width: 100%;
+    z-index: -1;
+    padding: 30px;
+    position: relative;
+    /* sirf utni hi jagah lega jitni isko chahiye  */
+    height: 300px;
+
+}
+#client-section::before
+{
+
+    content: "";
+    position: absolute;
+    background: url(sponsored.jpg)no-repeat center center/cover;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.4;
+}
+#clients
+{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+.client-item
+{
+    padding: 34px;
+}
+#clients img
+{
+    border-radius: 30px;
+
+    height: 80px;
+}
 
 </style>
 
@@ -242,15 +290,50 @@ opacity: 0.9;
 
               Founded in 2006, BlueBus is part of India’s leading online travel company MakeMyTrip Limited (NASDAQ: MMYT). By providing widest choice, superior customer service, lowest prices and unmatched benefits, redBus has served over 18 million customers. BlueBus has a global presence with operations across Indonesia, Singapore, Malaysia, Colombia and Peru apart from India.
               </p>
-            <p><a class="btn btn-primary btn-lg" href="/" role="button">Learn more »</a></p>
+            <p><a class="btn btn-success btn-lg" href="/" role="button">Learn more »</a></p>
       </div>
     </div>
   
   
   </main>
+  <section id="client-section">
+    <h1 class="h-primary center">
+        Sponsored By
+    </h1>
+    <div id="clients">
+        <div class="client-item">
+            <img src="/media/BusTracking/images/logo1.png" alt="Our Client">
+        </div>
+        <div class="client-item">
+            <img src="/media/BusTracking/images/logo2.png" alt="Our Client">
+        </div>
+        <div class="client-item">
+            <img src="/media/BusTracking/images/logo3.png" alt="Our Client">
+        </div>
+        <div class="client-item">
+            <img src="/media/BusTracking/images/logo4.png" alt="Our Client">
+        </div>
+    </div>
+</section>
+  <footer>
+    <div class="center">
+        copyright &copy; www.Bus.in. All rights reserved
+    </div>
+    <div class="center">
+       <span id="time">Hello</span>
+     </div>
+</footer>
+
 {% endblock %}
 {% block js %}
 <script>
+
+
+  function time(){
+    time = new Date()
+    document.getElementById('time').innerHTML=time;
+}
+ setInterval(time, 1000);
    {% if logouts %}
    document.getElementById('alert').innerHTML=` <div class="alert alert-success" role="alert" id="alert1">
       <strong>Hey!</strong> You are successfully logout
@@ -265,6 +348,15 @@ opacity: 0.9;
   {% if signups %}
   document.getElementById('alert').innerHTML=` <div class="alert alert-success" role="alert" id="alert1">
       <strong>Hey!</strong> You are successfully signed up
+      <button type="button" class="close" id="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>`
+    {% endif %}
+    {% if cantsignups %}
+
+    document.getElementById('alert').innerHTML=` <div class="alert alert-success" role="alert" id="alert1">
+      <strong>Hey!</strong> Signup is not submitted , there is user present which has same username you entered please fill form once again , with different username.
       <button type="button" class="close" id="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>

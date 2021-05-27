@@ -23,53 +23,11 @@
 <div class="container">
   {% if R %}
     <form action="/bookmultipleticket/{{pass_id}}/{{number}}/" method="POST" id="loginuser">{% csrf_token %}
-    <!-- <h3 class="center">Query-Section</h3>
-    <div class="mb-3 col-4">
-        <label for="name" class="form-label">Name</label>
-        <input type="name" class="form-control" id="name" name="name" placeholder="Enter your Name" required>
-      </div>
-    <div class="mb-3 col-4">
-        <label for="age" class="form-label">Age</label>
-        <input type="number" class="form-control" id="age" name="age" placeholder="Enter your Age">
-      </div>
-    <div class="mb-3 col-3">
-        <label for="id" class="form-label">AdhaarId</label>
-        <input type="number" class="form-control" id="id" name="id" placeholder="Enter your Adhaar-Number" required>
-      </div>
-      <div class="mb-3 col-12">
-        <div class="bootstrap-iso">
-            <div class="form-group"> 
-              <label class="control-label" for="date">Date</label>
-              <input class="form-control" id="date" name="date" placeholder="YYYY-MM-DD" type="text"/>
-            </div>
-          </div>
-      </div>
-      <button type="submit" class="btn btn-success ">Submit</button> -->
+   
     </form>
     {% else %}
     <form action="/bookticket/{{route_id}}/{{pass_id}}/{{number}}/" method="POST" id="loginuser">{% csrf_token %}
-      <!-- <h3 class="center">Query-Section</h3>
-      <div class="mb-3 col-4">
-          <label for="name" class="form-label">Name</label>
-          <input type="name" class="form-control" id="name" name="name" placeholder="Enter your Name" required>
-        </div>
-      <div class="mb-3 col-4">
-          <label for="age" class="form-label">Age</label>
-          <input type="number" class="form-control" id="age" name="age" placeholder="Enter your Age">
-        </div>
-      <div class="mb-3 col-3">
-          <label for="id" class="form-label">AdhaarId</label>
-          <input type="number" class="form-control" id="id" name="id" placeholder="Enter your Adhaar-Number" required>
-        </div>
-        <div class="mb-3 col-12">
-          <div class="bootstrap-iso">
-              <div class="form-group"> 
-                <label class="control-label" for="date">Date</label>
-                <input class="form-control" id="date" name="date" placeholder="YYYY-MM-DD" type="text"/>
-              </div>
-            </div>
-        </div>
-        <button type="submit" class="btn btn-success ">Submit</button> -->
+      
       </form>
     {% endif %}
     <div id="extra">
@@ -125,7 +83,7 @@
                 </div>
                 <div class="mb-3 col-3">
                   <label for="id{{forloop.counter}}" class="form-label">Adhaar ID</label>
-                  <input type="number" class="form-control" id="id{{forloop.counter}}" aria-describedby="emailHelp" name="id{{forloop.counter}}" required>
+                  <input type="number" class="form-control" id="id{{forloop.counter}}" aria-describedby="emailHelp" name="id{{forloop.counter}}" min="100000000000" max="999999999999" required title="Must be 12 digits">
                 </div>
                  <div class="mb-3 col-4">
                    <div class="bootstrap-iso">
@@ -139,7 +97,7 @@
             <div class="form-group"> 
               <div class="mb-3 col-3">
               <label class="control-label" style="display: none;" for="date">Date</label>
-              <input style="display: none;" class="form-control" id="date{{forloop.counter}}" name="date{{forloop.counter}}" value=${date} type="text"/>
+              <input style="display: none;" class="form-control" id="date{{forloop.counter}}" name="date{{forloop.counter}}" value=${date} type="text" required/>
             </div>
             </div>
           </div>
@@ -150,18 +108,7 @@
               <input style="display: none;" class="center title" id="rdid" name="rdid" value="{{rdid}}">
               <input style="display: none;" class="center title" id="roid" name="roid" value="{{roid}}">
       <button type="submit" class="btn btn-success ">Submit</button>`
-//     {% else %}
-// document.getElementById('loginuser').innerHTML=`{% csrf_token %} <h3 class="center">Passenger-Info</h3>
-    
-//       <div class="mb-3 col-12">
-//         <div class="bootstrap-iso">
-//             <div class="form-group"> <!-- Date input -->
-//               <label class="control-label" for="date">Date</label>
-//               <input class="form-control" id="date" name="date" placeholder="YYYY-MM-DD" type="text"/>
-//             </div>
-//           </div>
-//       </div>
-//       <button type="submit" class="btn btn-success ">Submit</button>`
+
 
       {% endif %}
 </script>
