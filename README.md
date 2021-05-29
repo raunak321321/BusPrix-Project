@@ -11,9 +11,9 @@
 <br>
 <br>
 <br>
-<img src="login1.png" width="32%">
-<img src="signup.png" width="32%">
-<img src="signup.png" width="32%">
+<img src="Login1.png">
+<img src="signup.png">
+<img src="LOgout.png">
 <br>
 <br>
 
@@ -22,7 +22,7 @@
 
 <br>
 <br>
-<img src="query.png" >
+<img src="Query.png" >
 
 <br>
 <br>
@@ -44,8 +44,8 @@
 
 <br>
 <br>
-<img src="SeatVerificattion.png" width="49%" >
-<img src="TicketBooking.png" width="49%">
+<img src="SeatVerificattion.png">
+<img src="TicketBooking.png">
 
 <br>
 <br>
@@ -56,7 +56,7 @@
 
 <br>
 <br>
-<img src="passinfo.png" width="100%" >
+<img src="PassInfo.png" width="100%" >
 
 <br>
 <br>
