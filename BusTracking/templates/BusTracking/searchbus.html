@@ -123,6 +123,9 @@ opacity: 1;
   input{
     display: block;
   }
+  form{
+    display: block;
+  }
 
 </style>
 
@@ -131,19 +134,7 @@ opacity: 1;
 
 {% block body %}
 <section class="container">
-    <!-- <h2 class="style" style="background-color:rgb(214, 207, 205)">
-        There is a list which have all the city where our bus stops
-    </h2>
-    <div class="col-2 mx-2 my-4 style">
-        <select class="form-select" aria-label="Select origin" aria-placeholder="To">
-            {% for item in busstand %}
-            <option value={{forloop.counter|add:1}}>
-  
-              {{item.name| upper}}
-            </option>
-              {% endfor %}
-        </select>
-    </div> -->
+ 
     <div id="extraerror" class="style">
 
     </div>
@@ -161,12 +152,12 @@ opacity: 1;
           </div>
             <span class="input-group-text">@</span>
             <div class="col-3">
-              <input class="form-control color my-10" id="date{{forloop.counter}}" name="date{{forloop.counter}}" placeholder="Date-YYYY-MM-DD" type="date" required/>
+              <input class="form-control color my-10" id="date" name="date" placeholder="Date-YYYY-MM-DD" type="date" required min='1950-01-0'>
 
             </div>
               <button style="background-color: rgb(211, 81, 71);" type="submit" class="btn btn-primary">Search Buses</button>
     </form>
-    <div id="extra" style="display: block;">
+    <div id="extra" style="display: inline-block;">
 
     </div>
 </section>
@@ -181,6 +172,20 @@ opacity: 1;
 
 {% block js %}
 <script>
+   var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth()+1; //January is 0!
+var yyyy = today.getFullYear();
+ if(dd<10){
+        dd='0'+dd
+    } 
+    if(mm<10){
+        mm='0'+mm
+    } 
+
+today = yyyy+'-'+mm+'-'+dd;
+document.getElementById("date").setAttribute("min", today);
+   
    $(document).ready(function(){
       var date_input=$('input[name="date"]'); //our date input has the name "date"
       var container=$('.input-group form').length>0 ? $('.input-group form').parent() : "body";

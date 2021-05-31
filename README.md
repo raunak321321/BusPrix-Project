@@ -2,8 +2,8 @@
 # <center> **BUS-PRIX** </center>
 
 ## <center>**User**-Authentication
-### <center>**Login , Logout , Signup**
-#### <center>In my webiste **BUS.in** There is a beautifull **user** authentication system and user can book his tickets and access his tickets only when he logins to my website.</center>
+### <center>**`Login , Logout , Signup`**
+### <center>In my webiste **BUS.in** There is a beautifull **`user authentication`** system and user can book his tickets and access his tickets only when he `logged in` to my website.</center>
 
 <br>
 <br>
@@ -12,13 +12,17 @@
 <br>
 <br>
 <img src="Login1.png">
+<br>
+<br>
 <img src="signup.png">
+<br>
+<br>
 <img src="LOgout.png">
 <br>
 <br>
 
 ## <center>**Query**
-#### <center>There is a Query Section where user can message to us or call to us if he/she is in emergency and there is contact number for tracking of bus too.</center>
+### <center>There is a `Query` Section where user can `message` to us or `call` to us if user is in `emergency` and there is contact number for `tracking` of `bus`.</center>
 
 <br>
 <br>
@@ -27,9 +31,9 @@
 <br>
 <br>
 
-## <center>**Search-Bus** For Booking Tickets
+## <center>**Search-Bus** For `Booking-Tickets`
 
-#### <center>There is a link named **Search Bus** where user can enter his origin and destination state and if there is/are bus which routes are subroutes or routes which user want then he get all the bus otherwise he get a message saying that no bus with this route.</center>
+### <center>There is a `link` named **`Search Bus`** where user can enter his `origin` and `destination` state and if there is/are `bus` which routes are subroutes or routes which user want then he get all the bus otherwise he get a message saying that no bus with this route.</center>
 
 <br>
 <br>
@@ -40,11 +44,14 @@
 
 ## <center>**Verification of Seats** In Bus Which User wants
 
-#### <center>After getting all the bus my app ask user to enter number of tickets the user wants.And if he tried to enter seats greater than the Available seats then he cant able to book tickets.He can able to book tickets only if there is enough seats are available such that his requirements are satisfied.</center>
+### <center>After getting all the bus my app ask user to enter number of `tickets` the user wants.And if he tried to enter seats greater than the Available seats then he cant able to book tickets.He can able to book tickets only if there is enough seats are available such that his requirements are satisfied.</center>
 
 <br>
 <br>
 <img src="SeatVerificattion.png">
+<br>
+<br>
+
 <img src="TicketBooking.png">
 
 <br>
@@ -52,7 +59,7 @@
 
 ## <center>**Passenger-Info**
 
-#### <center>User have to enter all the details of each passenger which gonna travel through our bus.After submitting form he get an success message which signifies that his ticket/s is booked.</center>
+### <center>User have to `enter` all the `details` of each `passenger` which `gonna travel` through our bus.After submitting form he get an success message which signifies that his ticket/s is booked.</center>
 
 <br>
 <br>
@@ -68,7 +75,7 @@
 
 ## <center>**Your-Tickets**
 
-#### <center>There is a link named Your-Tickets which gives user all his tickets which he **booked** till now.</center>
+### <center>There is a `link` named `Your-Tickets` which gives user all his tickets which he **`booked`** till now.</center>
 
 <br>
 <br>
@@ -79,7 +86,7 @@
 
 ## <center>**Footer**
 
-#### <center>There is footer page of my website please have a look.</center>
+### <center>There is `footer` page of my website please have a `look`.</center>
 
 <br>
 <br>
@@ -94,7 +101,7 @@
 ## <center>**My-Code**
 <br>
 
-#### <center>There is some small part of my models and views code , have a look.</center>
+### <center>There is some small part of my `models` and `views` code , have a look.</center>
 <br>
 
 ```python-models

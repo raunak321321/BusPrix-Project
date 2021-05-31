@@ -10,11 +10,13 @@ import sys
 
 # Create your views here.
 def index(request):
+    user = User.objects.values('password','username')
+    # print(user[0]['username'])
     busstand = BusStand.objects.values('name')
     bus = Bus.objects.all()
     n = len(bus)
     n_slides = n//2 + ceil((n/2)-(n//2))
-    return render(request,'BusTracking/index.html',{"bus":bus,"range":range(1,n_slides),"busstand":busstand})
+    return render(request,'BusTracking/index.html',{"bus":bus,"range":range(1,n_slides),"busstand":busstand,"user":user})
 
 def ticketchecker(request,myid):
 
