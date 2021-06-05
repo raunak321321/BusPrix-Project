@@ -25,7 +25,6 @@ SECRET_KEY = '5mk3w*aj2g4lh#55xfmx4kzcivdj7j&650*vlix#!^t1g$lt#m'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'booking-bus-via-busin.herokuapp.com'
 ]
 
 
