@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="en">
-    {% load static %}     
 
   <head>
     <!-- Required meta tags -->
@@ -181,7 +180,7 @@
             <div class="collapse navbar-collapse mx-4" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item bus">
-                        <img class="nav-link" src="{% static 'BusTracking/media/bus.jpg' %}" alt="error">
+                        <img class="nav-link" src="/media/BusTracking/images/bus.jpg" alt="error">
               </li>
               {% if user.is_authenticated %}
               <li class="nav-item mx-4" id="givetickets">

@@ -1,0 +1,1 @@
+web: gunicorn Bus_Prix.wsgi

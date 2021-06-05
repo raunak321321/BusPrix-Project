@@ -1,5 +1,4 @@
 {% extends 'BusTracking/basics.html' %}
-{% load static %}     
 
 
 {% block title %}BlueBus.in{% endblock %}
@@ -23,7 +22,6 @@ align-items: center;     */
   /* margin: 0%; */
 }
 .container::before{
-    /* background: url({% static 'BusTracking/media/image3.jpg' %})no-repeat; */
 background: url('/media/BusTracking/images/thebus1.jpg') no-repeat center/cover;
 content: "";
 position: absolute;
@@ -31,7 +29,6 @@ width: 100%;
 height: 100%;
 z-index: -1;
 opacity: 0.9;
-/* background: url('static/BusTracking/media/image4.jpg')no-repeat right; */
 }
 #close{
   margin: 0%;
