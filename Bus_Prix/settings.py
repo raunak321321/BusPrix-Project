@@ -24,7 +24,9 @@ SECRET_KEY = '5mk3w*aj2g4lh#55xfmx4kzcivdj7j&650*vlix#!^t1g$lt#m'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'booking-bus-via-busin.herokuapp.com'
+]
 
 
 # Application definition
