@@ -2,8 +2,9 @@
 # <center> **BUS-PRIX** </center>
 
 ## <center>**User**-Authentication
+### <center>The project encompasses a user friendly bus ticket booking system, which allows only authorized users to book tickets after logging in successfully.
 ### <center>**`Login , Logout , Signup`**
-### <center>In my webiste **BUS.in** There is a beautifull **`user authentication`** system and user can book his tickets and access his tickets only when he `logged in` to my website.</center>
+### <center>In this site **BUS.in** There is a beautifull **`user authentication`** system and user can book his tickets and access his tickets only when he `logged in` to this website.</center>
 
 <br>
 <br>
